@@ -1,0 +1,27 @@
+// program to insert record into MyTable
+import java.sql.*;
+import java.util.*;
+
+class InsRec extends MyConnection
+{
+  public static void main(String args[]) throws Exception
+  {
+    Scanner sc=new Scanner(System.in);
+    connect("hr","manager");
+    Statement s=c.createStatement();
+    int ch;
+    do
+    {
+      System.out.print("Enter sno ");
+      int sn=Integer.parseInt(sc.nextLine());
+      System.out.print("Enter name ");
+      String na=sc.nextLine();
+      System.out.print("Enter phone number ");
+      long ph=Long.parseLong(sc.nextLine());
+      String q="insert into friends101 values("+sn+",'"+na+"',"+ph+")";
+      s.executeUpdate(q);
+      System.out.print("enter 1 to repeat ");
+      ch=Integer.parseInt(sc.nextLine());
+    } while(ch==1);
+  }
+}

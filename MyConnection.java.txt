@@ -1,0 +1,40 @@
+// program for DB Connection test
+
+import java.sql.*;
+class MyConnection
+{
+  static Connection c;
+  public static void connect(String un,String pw)
+  { 
+    try
+    {
+      Class.forName("oracle.jdbc.driver.OracleDriver");
+      String url="jdbc:oracle:thin:@localhost:1521:xe";
+      c=DriverManager.getConnection(url,un,pw);
+      System.out.println("connected");
+    }
+    catch(ClassNotFoundException e)
+    {
+      System.out.println(e);
+      System.out.println("Driver Class could not be located..Connection failed");
+    }
+    catch(SQLException e)
+    {
+      String x=e.getMessage();
+      int en=Integer.parseInt(x.substring(4,9));  // find oracle error code number
+      if (en==1)
+        System.out.println("cannot insert duplicate sno");
+      else if (en==1017)
+        System.out.println("check with username or password");
+      else if (en==1400)
+        System.out.println("cannot insert null value to sno");
+    }
+    catch(Exception e)
+    {
+      System.out.println(e);
+      System.out.println("Other error occured");
+    }
+  }
+//  public static void main(String args[]) { connect("mani","mani123");   }
+}
+	

@@ -1,0 +1,32 @@
+// program to delete the record
+import java.sql.*;
+import java.util.*;
+
+class DeleteRec extends MyConnection
+{
+  public static void main(String args[])throws Exception
+  {
+    Scanner sc=new Scanner(System.in);
+    connect("hr","manager");
+    Statement s=c.createStatement();
+
+    System.out.println("enter sno of person to delete ");
+    int sn=Integer.parseInt(sc.nextLine());
+    ResultSet rs=s.executeQuery("select * from friends101 where sno="+sn);
+    if (rs.next())
+    {
+      System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getLong(3));
+      System.out.println("type 1 to confirm deleting this record ");
+      int ans=Integer.parseInt(sc.nextLine());
+      if (ans==1)
+      {
+        s.executeUpdate("delete from friends101 where sno="+sn);
+        System.out.println("row deleted");
+      }
+      else
+        System.out.println("NOT deleted");
+    }
+    else
+      System.out.println("sno not found");
+  }
+}

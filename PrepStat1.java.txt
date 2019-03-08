@@ -1,0 +1,75 @@
+// program using PreparedStatement object to insert,update,delete data into friends101
+import java.sql.*;
+import java.util.*;
+
+class PrepStat1 extends MyConnection
+{
+  static Scanner sc=new Scanner(System.in);
+  static String q;
+
+  public static void main(String args[]) throws Exception
+  {
+    connect("hr","manager");
+    int ch;
+    do
+    {
+      System.out.println(" 1 Insert \n 2 Update \n 3 Delete \n 4 Exit");
+      System.out.println("enter your choice ");
+      ch=Integer.parseInt(sc.nextLine());
+      switch(ch)
+      {
+        case 1 : insertRecord(); break;
+        case 2 : updateRecord(); break;
+        case 3 : deleteRecord(); break;
+        case 4 : System.exit(0);
+        default: System.out.println("invalid choice...retry ");
+      }
+    } while(ch!=4);
+  }
+  public static void insertRecord()  throws Exception
+  {
+    q="insert into friends101 values (?,?,?)";
+    PreparedStatement ps=c.prepareStatement(q);
+    do
+    {
+      System.out.print("Enter sno ");
+      ps.setInt(1,Integer.parseInt(sc.nextLine()));
+      System.out.print("Enter name ");
+      ps.setString(2,sc.nextLine());
+      System.out.print("Enter phone number  ");
+      ps.setLong(3,Long.parseLong(sc.nextLine()));
+
+      ps.execute();
+      System.out.print("type 1 to repeat, any other value to stop ");
+    } while(Integer.parseInt(sc.nextLine())==1);
+  }
+  public static void updateRecord() throws Exception
+  {
+    q="update friends101 set phno=? where sno=?";
+    PreparedStatement ps=c.prepareStatement(q);
+    do
+    {
+      System.out.print("Enter sno of whose details to modify ");
+      ps.setInt(2,Integer.parseInt(sc.nextLine()));
+      System.out.print("Enter new phone number  ");
+      ps.setLong(1,Long.parseLong(sc.nextLine()));
+
+      ps.execute();
+      System.out.print("type 1 to repeat, any other value to stop ");
+    } while(Integer.parseInt(sc.nextLine())==1);
+  }
+  public static void deleteRecord()  throws Exception
+  {
+    q="delete from friends101 where sno=?";
+    PreparedStatement ps=c.prepareStatement(q);
+    do
+    {
+      System.out.print("Enter sno to delete ");
+      ps.setInt(1,Integer.parseInt(sc.nextLine()));
+
+      ps.execute();
+      System.out.print("type 1 to repeat, any other value to stop ");
+    } while(Integer.parseInt(sc.nextLine())==1);
+  }
+}
+

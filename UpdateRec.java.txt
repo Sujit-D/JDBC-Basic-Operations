@@ -1,0 +1,25 @@
+// program to update the record
+import java.sql.*;
+import java.util.*;
+
+class UpdateRec extends MyConnection
+{
+  public static void main(String args[])throws Exception
+  {
+    Scanner sc=new Scanner(System.in);
+    connect("hr","manager");
+    Statement s=c.createStatement();
+
+    System.out.println("enter sno of person to modify ");
+    int sn=Integer.parseInt(sc.nextLine());
+    System.out.println("enter new phone number ");
+    long ph=Long.parseLong(sc.nextLine());
+
+    String q="update friends101 set phno="+ph+" where sno="+sn;
+    s.executeUpdate(q);
+    if (s.getUpdateCount()==0)
+      System.out.println("sno not found");
+    else
+      System.out.println("phone number modified ");
+  }
+}

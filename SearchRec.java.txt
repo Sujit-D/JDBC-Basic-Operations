@@ -1,0 +1,31 @@
+// program to search for the given record
+import java.sql.*;
+import java.util.*;
+
+class SearchRec extends MyConnection
+{
+  public static void main(String args[]) throws Exception
+  {
+    Scanner sc=new Scanner(System.in);
+    connect("hr","manager");
+    Statement s=c.createStatement();
+
+    System.out.println("enter empno of person ");
+    int en=Integer.parseInt(sc.nextLine());
+//    ResultSet rs=s.executeQuery("select * from employees");
+    ResultSet rs=s.executeQuery("select employee_id, first_name, salary*12.5/100, hire_date from employees");
+    int count=0;
+    while(rs.next())
+    {
+      if(rs.getInt(1)==en)
+      {
+        count++;
+        System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getDouble(3)+"\t"+rs.getDate(4));
+      }
+    }
+    if (count==0)
+      System.out.println("empno not found");
+    else
+      System.out.println("number of records listed "+count);
+  }
+}
